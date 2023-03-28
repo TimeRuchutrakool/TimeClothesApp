@@ -11,7 +11,7 @@ import SwiftUI
 struct TClothesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FirstScreen()
         }
     }
 }

@@ -8,17 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		F44E961329D2C0340060E59A /* TClothesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E961229D2C0340060E59A /* TClothesApp.swift */; };
-		F44E961529D2C0340060E59A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E961429D2C0340060E59A /* ContentView.swift */; };
+		F44E961529D2C0340060E59A /* OnBoardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E961429D2C0340060E59A /* OnBoardingScreen.swift */; };
 		F44E961729D2C0350060E59A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F44E961629D2C0350060E59A /* Assets.xcassets */; };
 		F44E961A29D2C0350060E59A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F44E961929D2C0350060E59A /* Preview Assets.xcassets */; };
+		F44E962129D2C6500060E59A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F44E962029D2C6500060E59A /* Launch Screen.storyboard */; };
+		F44E962429D2C7450060E59A /* LogInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E962329D2C7450060E59A /* LogInScreen.swift */; };
+		F44E962929D2D8E20060E59A /* FirstScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E962829D2D8E20060E59A /* FirstScreen.swift */; };
+		F44E962C29D326090060E59A /* LogInSignUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E962B29D326090060E59A /* LogInSignUpTextField.swift */; };
+		F44E962E29D329820060E59A /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E962D29D329820060E59A /* SignUpScreen.swift */; };
+		F44E963029D32B1C0060E59A /* GimmickButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E962F29D32B1C0060E59A /* GimmickButton.swift */; };
+		F44E963229D330F70060E59A /* LogInSignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E963129D330F70060E59A /* LogInSignUpButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F44E960F29D2C0340060E59A /* TClothes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TClothes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F44E961229D2C0340060E59A /* TClothesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TClothesApp.swift; sourceTree = "<group>"; };
-		F44E961429D2C0340060E59A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F44E961429D2C0340060E59A /* OnBoardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScreen.swift; sourceTree = "<group>"; };
 		F44E961629D2C0350060E59A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F44E961929D2C0350060E59A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F44E962029D2C6500060E59A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		F44E962329D2C7450060E59A /* LogInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInScreen.swift; sourceTree = "<group>"; };
+		F44E962829D2D8E20060E59A /* FirstScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreen.swift; sourceTree = "<group>"; };
+		F44E962B29D326090060E59A /* LogInSignUpTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInSignUpTextField.swift; sourceTree = "<group>"; };
+		F44E962D29D329820060E59A /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
+		F44E962F29D32B1C0060E59A /* GimmickButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GimmickButton.swift; sourceTree = "<group>"; };
+		F44E963129D330F70060E59A /* LogInSignUpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInSignUpButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,9 +66,12 @@
 			isa = PBXGroup;
 			children = (
 				F44E961229D2C0340060E59A /* TClothesApp.swift */,
-				F44E961429D2C0340060E59A /* ContentView.swift */,
+				F44E962529D2CA330060E59A /* Extension */,
+				F44E962A29D325E50060E59A /* ViewComponents */,
+				F44E962229D2C7080060E59A /* View */,
 				F44E961629D2C0350060E59A /* Assets.xcassets */,
 				F44E961829D2C0350060E59A /* Preview Content */,
+				F44E962029D2C6500060E59A /* Launch Screen.storyboard */,
 			);
 			path = TClothes;
 			sourceTree = "<group>";
@@ -65,6 +82,34 @@
 				F44E961929D2C0350060E59A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F44E962229D2C7080060E59A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F44E962829D2D8E20060E59A /* FirstScreen.swift */,
+				F44E961429D2C0340060E59A /* OnBoardingScreen.swift */,
+				F44E962329D2C7450060E59A /* LogInScreen.swift */,
+				F44E962D29D329820060E59A /* SignUpScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F44E962529D2CA330060E59A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		F44E962A29D325E50060E59A /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				F44E962B29D326090060E59A /* LogInSignUpTextField.swift */,
+				F44E962F29D32B1C0060E59A /* GimmickButton.swift */,
+				F44E963129D330F70060E59A /* LogInSignUpButton.swift */,
+			);
+			path = ViewComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +170,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44E962129D2C6500060E59A /* Launch Screen.storyboard in Resources */,
 				F44E961A29D2C0350060E59A /* Preview Assets.xcassets in Resources */,
 				F44E961729D2C0350060E59A /* Assets.xcassets in Resources */,
 			);
@@ -137,8 +183,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F44E961529D2C0340060E59A /* ContentView.swift in Sources */,
+				F44E962929D2D8E20060E59A /* FirstScreen.swift in Sources */,
+				F44E961529D2C0340060E59A /* OnBoardingScreen.swift in Sources */,
+				F44E962C29D326090060E59A /* LogInSignUpTextField.swift in Sources */,
+				F44E963029D32B1C0060E59A /* GimmickButton.swift in Sources */,
+				F44E962429D2C7450060E59A /* LogInScreen.swift in Sources */,
+				F44E963229D330F70060E59A /* LogInSignUpButton.swift in Sources */,
 				F44E961329D2C0340060E59A /* TClothesApp.swift in Sources */,
+				F44E962E29D329820060E59A /* SignUpScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,8 +325,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -282,9 +335,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = th.ac.chula.cbs.stat.TClothes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -302,8 +358,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,9 +368,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = th.ac.chula.cbs.stat.TClothes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

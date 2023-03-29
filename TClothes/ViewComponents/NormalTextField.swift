@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct LogInSignUpTextField: View {
+struct NormalTextField: View {
     var size: CGSize
+    var placeHolder: String
     @Binding var text: String
     var body: some View {
         RoundedRectangle(cornerRadius: 20)
@@ -16,7 +17,7 @@ struct LogInSignUpTextField: View {
             .opacity(0.95)
             .frame(width: size.width*0.8,height: 60)
             .overlay(
-                TextField("Email", text: $text).padding()
+                TextField(placeHolder, text: $text).padding()
             )
             .padding(.vertical)
     }
@@ -24,6 +25,6 @@ struct LogInSignUpTextField: View {
 
 struct LogInTextField_Previews: PreviewProvider {
     static var previews: some View {
-        LogInSignUpTextField(size: CGSize(width: 100, height: 10), text: .constant(""))
+        NormalTextField(size: CGSize(width: 100, height: 10), placeHolder: "", text: .constant(""))
     }
 }

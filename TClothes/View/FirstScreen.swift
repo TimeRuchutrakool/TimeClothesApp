@@ -9,18 +9,23 @@ import SwiftUI
 
 struct FirstScreen: View {
     @AppStorage("isBoardingActive") var isBoardingActive: Bool = true
+    @EnvironmentObject private var authModel: AuthViewModel
     var body: some View {
-        if isBoardingActive{
-            OnBoardingScreen()
-        }
-        else{
-            LogInScreen()
+        Group{
+            if isBoardingActive{
+                OnBoardingScreen()
+            }
+            else{
+                if authModel.user != nil{
+                    MainScreen().environmentObject(AuthViewModel())
+                }
+                else{
+                    LogInScreen().environmentObject(AuthViewModel())
+                }
+            }
+        }.onAppear(){
+            authModel.listenToAuthState()
         }
     }
 }
 
-struct FirstScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        FirstScreen()
-    }
-}

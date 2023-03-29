@@ -11,7 +11,7 @@ struct OnBoardingScreen: View {
     @AppStorage("isBoardingActive") var isBoardingActive: Bool = true
     @State private var isAnimating: Bool = false
     var body: some View {
-        NavigationView {
+        
             ZStack{
                 
                 //MARK: - BACKGROUND
@@ -87,7 +87,7 @@ struct OnBoardingScreen: View {
                     
                 }
             }
-        }
+        
         
     }
 }

@@ -9,16 +9,20 @@ import SwiftUI
 
 struct LogInScreen: View {
     @AppStorage("isBoardingActive") var isBoardingActive: Bool = false
+    @EnvironmentObject private var authModel: AuthViewModel
     @State private var isAnimating: Bool = false
     @State private var emailText: String = ""
     @State private var passwordText: String = ""
     var body: some View {
-        NavigationView {
+        
             ZStack{
                 //MARK: - BACKGROUND
-                Image("LoginSignUpBG")
-                    .resizable()
-                    .scaledToFill()
+                Color.clear
+                    .background(
+                        Image("LoginSignUpBG")
+                            .resizable()
+                            .scaledToFill()
+                    )
                 
                 GeometryReader { geo in
                     VStack{
@@ -31,11 +35,11 @@ struct LogInScreen: View {
                             .opacity(isAnimating ? 1 : 0.6)
                         //MARK: - EMAIL TEXTFIELD
                         Group {
-                            LogInSignUpTextField(size: geo.size, text: $emailText)
+                            NormalTextField(size: geo.size, placeHolder: "Email", text: $emailText)
                             
                             
                             //MARK: - PASSWORD TEXTFIELD
-                            LogInSignUpTextField(size: geo.size, text: $passwordText)
+                            PasswordTextField(size: geo.size, text: $passwordText)
                             
                             //MARK: - SIGN UP BUTTON
                             HStack{
@@ -43,7 +47,7 @@ struct LogInScreen: View {
                                 Text("New User?")
                                     .foregroundColor(.gray)
                               
-                                NavigationLink(destination: SignUpScreen()){
+                                NavigationLink(destination: SignUpScreen().environmentObject(AuthViewModel())){
                                     Text("Sign Up")
                                         .foregroundColor(.white)
                                 }
@@ -56,7 +60,7 @@ struct LogInScreen: View {
                         .offset(y: isAnimating ? 0 : -20)
                         //MARK: - LOGIN BUTTON
                         Button {
-                            isBoardingActive = true
+                            authModel.logIn(email: emailText, password: passwordText)
                         } label: {
                             LogInSignUpButton(text: "LOGIN", size: geo.size)
                         }
@@ -72,7 +76,7 @@ struct LogInScreen: View {
                         isAnimating = true
                     }
                 }
-            }
+            
         }
     }
 }

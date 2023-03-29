@@ -19,8 +19,6 @@ struct GimmickButton: View {
                     .foregroundColor(.gray)
                     .font(.system(size: 20))
                     .fontWeight(.heavy))
-            
-
     }
 }
 

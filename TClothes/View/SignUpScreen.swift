@@ -9,27 +9,26 @@ import SwiftUI
 
 struct SignUpScreen: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var usernameText: String = ""
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @State var userNameText: String = ""
     @State var emailText: String = ""
     @State var passwordText: String = ""
     @State private var isAnimating: Bool = false
     var body: some View {
-        
-        
         ZStack{
-            //MARK: - BG
-            Image("LoginSignUpBG")
-                .resizable()
-                .scaledToFill()
-                .blur(radius: 5, opaque: true)
-                .overlay(Color.black
-                    .opacity(0.2))
-            
+            Color.clear
+                .background(
+                    Image("LoginSignUpBG")
+                        .resizable()
+                        .blur(radius: 5, opaque: true)
+                        .overlay(Color.black
+                            .opacity(0.2))
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.all)
+                )
             GeometryReader { geo in
                 VStack {
                     //MARK: - HEADER
-                    Spacer()
-                    
                     HStack{
                         VStack(alignment: .leading){
                             Button {
@@ -43,39 +42,44 @@ struct SignUpScreen: View {
                                 .fontWeight(.heavy)
                         }
                         Spacer()
-                    }.padding(.horizontal,30)
+                    }.padding(.horizontal,20)
+                        .padding(.top)
                         .opacity(isAnimating ? 1 : 0)
                         .offset(y: isAnimating ? 0 : -20)
                     
                     
+                    Spacer()
+                    
                     //MARK: - TEXT FIELD
-                    VStack(alignment: .leading){
-                        Text("USERNAME")
-                            .foregroundColor(.white)
-                        LogInSignUpTextField(size: geo.size, text: $usernameText)
-                        Text("EMAIL")
-                            .foregroundColor(.white)
-                        LogInSignUpTextField(size: geo.size, text: $emailText)
-                        Text("PASSWORD")
-                            .foregroundColor(.white)
-                        LogInSignUpTextField(size: geo.size, text: $passwordText)
+                    HStack{
+                        Spacer()
+                        VStack(alignment: .leading){
+                            Text("USERNAME")
+                                .foregroundColor(.white)
+                            NormalTextField(size: geo.size, placeHolder: "Username", text: $userNameText)
+                            Text("EMAIL")
+                                .foregroundColor(.white)
+                            NormalTextField(size: geo.size, placeHolder: "Email", text: $emailText)
+                            Text("PASSWORD")
+                                .foregroundColor(.white)
+                            PasswordTextField(size: geo.size, text: $passwordText)
+                        }
+                        Spacer()
                     }
-                    .opacity(isAnimating ? 1 : 0)
-                    .padding(.vertical)
+                    
+                    Spacer()
                     
                     Button {
-                        
+                        authViewModel.createAccount(username: userNameText, email: emailText, password: passwordText)
                     } label: {
                         LogInSignUpButton(text: "SIGN UP", size: geo.size)
                     }
                     .opacity(isAnimating ? 1 : 0)
                     .offset(y: isAnimating ? 0 : 20)
-                    .padding(.vertical)
+                    
                     Spacer()
                     
-                    
                 }
-                
                 
                 .navigationBarBackButtonHidden()
             }
@@ -86,10 +90,12 @@ struct SignUpScreen: View {
             }
         }
     }
+    
+    
 }
 
 struct SignUpScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpScreen()
+        SignUpScreen().preferredColorScheme(.dark)
     }
 }

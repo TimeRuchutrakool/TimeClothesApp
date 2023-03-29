@@ -31,6 +31,10 @@
 		F44E964A29D42ACB0060E59A /* WishListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E964929D42ACB0060E59A /* WishListScreen.swift */; };
 		F44E964C29D42AD30060E59A /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E964B29D42AD30060E59A /* ProfileScreen.swift */; };
 		F44E964E29D42D560060E59A /* ProductsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E964D29D42D560060E59A /* ProductsViewModel.swift */; };
+		F44E965129D4828D0060E59A /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E965029D4828D0060E59A /* Product.swift */; };
+		F44E965329D488950060E59A /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E965229D488950060E59A /* ProductCard.swift */; };
+		F44E965529D49F640060E59A /* CollectionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E965429D49F640060E59A /* CollectionCard.swift */; };
+		F44E965729D4A24B0060E59A /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E965629D4A24B0060E59A /* CornerRadiusStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +59,10 @@
 		F44E964929D42ACB0060E59A /* WishListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListScreen.swift; sourceTree = "<group>"; };
 		F44E964B29D42AD30060E59A /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		F44E964D29D42D560060E59A /* ProductsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewModel.swift; sourceTree = "<group>"; };
+		F44E965029D4828D0060E59A /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		F44E965229D488950060E59A /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
+		F44E965429D49F640060E59A /* CollectionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCard.swift; sourceTree = "<group>"; };
+		F44E965629D4A24B0060E59A /* CornerRadiusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +101,7 @@
 			children = (
 				F44E961229D2C0340060E59A /* TClothesApp.swift */,
 				F44E962529D2CA330060E59A /* Extension */,
+				F44E964F29D482780060E59A /* Model */,
 				F44E963E29D3FFB50060E59A /* ViewModel */,
 				F44E962A29D325E50060E59A /* ViewComponents */,
 				F44E962229D2C7080060E59A /* View */,
@@ -131,6 +140,7 @@
 		F44E962529D2CA330060E59A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				F44E965629D4A24B0060E59A /* CornerRadiusStyle.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -142,6 +152,8 @@
 				F44E964329D40EC30060E59A /* PasswordTextField.swift */,
 				F44E963129D330F70060E59A /* LogInSignUpButton.swift */,
 				F44E962F29D32B1C0060E59A /* GimmickButton.swift */,
+				F44E965229D488950060E59A /* ProductCard.swift */,
+				F44E965429D49F640060E59A /* CollectionCard.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -153,6 +165,14 @@
 				F44E964D29D42D560060E59A /* ProductsViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F44E964F29D482780060E59A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F44E965029D4828D0060E59A /* Product.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,9 +258,13 @@
 			files = (
 				F44E962929D2D8E20060E59A /* FirstScreen.swift in Sources */,
 				F44E961529D2C0340060E59A /* OnBoardingScreen.swift in Sources */,
+				F44E965529D49F640060E59A /* CollectionCard.swift in Sources */,
 				F44E964E29D42D560060E59A /* ProductsViewModel.swift in Sources */,
+				F44E965729D4A24B0060E59A /* CornerRadiusStyle.swift in Sources */,
 				F44E964229D40A510060E59A /* MainScreen.swift in Sources */,
 				F44E962C29D326090060E59A /* NormalTextField.swift in Sources */,
+				F44E965129D4828D0060E59A /* Product.swift in Sources */,
+				F44E965329D488950060E59A /* ProductCard.swift in Sources */,
 				F44E964C29D42AD30060E59A /* ProfileScreen.swift in Sources */,
 				F44E964829D42ABE0060E59A /* SearchScreen.swift in Sources */,
 				F44E963029D32B1C0060E59A /* GimmickButton.swift in Sources */,

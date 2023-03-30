@@ -17,7 +17,7 @@ struct ProductCard: View {
                             image
                                 .resizable()
                                 .scaledToFill()
-                                .frame(minWidth: 140,maxWidth: 170,minHeight: 200,maxHeight: 230)
+                                .frame(minWidth: 160,maxWidth: 170,minHeight: 200,maxHeight: 230)
                                 .cornerRadius(16)
                                 .padding()
                         }
@@ -36,7 +36,8 @@ struct ProductCard: View {
                 HStack{
                     VStack(alignment: .leading){
                         Text(product.productName)
-                            .font(.system(size: 17))
+                            .font(.system(size: 15))
+                            .foregroundColor(.black)
                             .fontWeight(.semibold)
                             .lineLimit(1)
                         Text(String(format: "$%.2f", product.price))
@@ -46,14 +47,14 @@ struct ProductCard: View {
                     Circle()
                         .fill(Color("ColorPink"))
                         .frame(width: 40)
-                        .overlay(Image(systemName: "heart")
+                        .overlay(Image(systemName:product.isWish ? "heart.fill" : "heart")
                             .font(.system(size: 20))
                             .foregroundColor(.white))
                 }
                 .padding(.horizontal)
                 
             }
-            .frame(minWidth: 150,maxWidth: 180,minHeight: 300,maxHeight: 330)
+            .frame(minWidth: 170,maxWidth: 180,minHeight: 300,maxHeight: 330)
             .background(.clear)
             .shadow(radius: 5)
     }

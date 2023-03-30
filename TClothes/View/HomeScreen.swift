@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeScreen: View {
     @StateObject private var productViewModel = ProductsViewModel()
     @State private var isShowCategories = false
+    
     var body: some View {
         ZStack{
             Color("ColorSoftGray")
@@ -49,7 +50,7 @@ struct HomeScreen: View {
                         
                         ScrollView(.horizontal,showsIndicators: false){
                             HStack(spacing: 15){
-                                ForEach(productViewModel.newArrivalProduct) { product in
+                                ForEach(productViewModel.products) { product in
                                     ProductCard(product: product)
                                         .padding(.vertical)
                                 }
@@ -93,9 +94,8 @@ struct HomeScreen: View {
             }
         }
         .onAppear(){
-            productViewModel.getNewArrivalProduct()
+            productViewModel.getProductByFilter(field: "new", value: true)
             productViewModel.getCategories()
-            productViewModel.getWishList()
             isShowCategories = false
         }
         .padding(.bottom,UIScreen.main.bounds.height*0.01)

@@ -16,5 +16,6 @@ class Product: Identifiable{
     var collection: String = ""
     var category: String = ""
     var new: Bool = false
+    var isWish: Bool = false
     
 }

@@ -49,29 +49,7 @@ struct OnBoardingScreen: View {
                     Button {
                         isBoardingActive = false
                     } label: {
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color("ColorPink"))
-                            .frame(minWidth: 120,maxWidth: 190,maxHeight: 70)
-                            .overlay(
-                                HStack{
-                                    
-                                    Circle()
-                                        .fill(.white)
-                                        .frame(width: 50)
-                                        .opacity(0.4)
-                                        .overlay(
-                                        Image(systemName: "arrow.right")
-                                            .foregroundColor(.white)
-                                            .font(.system(size: 35))
-                                        
-                                        )
-                                    
-                                    Text("Get Started")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 20,design: .rounded))
-                                        .fontWeight(.heavy)
-                                }
-                            )
+                        PinkImageButton(image: "arrow.right", text: "Get Started")
                             .offset(y: isAnimating ? 0 : 20)
                             .opacity(isAnimating ? 1 : 0)
                     }

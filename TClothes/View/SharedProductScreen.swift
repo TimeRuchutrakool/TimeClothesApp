@@ -1,0 +1,66 @@
+//
+//  SharedProductScreen.swift
+//  TClothes
+//
+//  Created by Time Ruchutrakool on 3/30/23.
+//
+
+import SwiftUI
+
+struct SharedProductScreen: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let category: String
+    @ObservedObject private var productViewModel = ProductsViewModel()
+    let columns: [GridItem] = [GridItem(.flexible()),GridItem(.flexible())]
+    
+    var body: some View {
+        ZStack{
+            Color("ColorSoftGray")
+                .edgesIgnoringSafeArea(.all)
+            VStack{
+                //MARK: - Header Button
+                HStack{
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        GimmickButton(imageName: "arrow.left")
+                    }
+                    Spacer()
+                    Text(category)
+                        .font(.headline)
+                        .bold()
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        GimmickButton(imageName: "cart.fill")
+                    }
+                    
+                }//HStack
+                .padding(.horizontal,25)
+                .padding(.vertical)
+                
+                ScrollView(.vertical,showsIndicators: false){
+                    LazyVGrid(columns: columns) {
+                        ForEach(productViewModel.products) { product in
+                            NavigationLink(destination: ProductDetailScreen(product: product)) {
+                                ProductCard(product: product)
+                                    
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .onAppear(){
+            productViewModel.getProductByFilter(field: "category",value: category)
+        }
+        .navigationBarBackButtonHidden(true)
+    }
+}
+
+struct SharedProductScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        SharedProductScreen(category: "Shirt")
+    }
+}

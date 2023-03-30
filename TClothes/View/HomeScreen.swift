@@ -8,82 +8,95 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @ObservedObject private var productViewModel = ProductsViewModel()
+    @StateObject private var productViewModel = ProductsViewModel()
+    @State private var isShowCategories = false
     var body: some View {
         ZStack{
             Color("ColorSoftGray")
                 .edgesIgnoringSafeArea(.all)
-            
-            VStack{
-                //MARK: - Header
-                HStack{
-                    GimmickButton(imageName: "text.justify")
-                    Spacer()
-                    GimmickButton(imageName: "cart.fill")
-                }.padding(.horizontal,25)
-                    .padding(.vertical)
-                ScrollView(.vertical,showsIndicators: false){
-                    //MARK: - New Arrival
+            ZStack{
+                VStack{
+                    //MARK: - Header
                     HStack{
-                        Text("New Arrival")
-                            .font(.system(size: 30,design: .rounded))
-                            .fontWeight(.heavy)
-                        Spacer()
                         Button {
-                            
-                        } label: {
-                            Text("See all")
-                                .foregroundColor(.gray)
-                        }
-                        
-                    }.padding(.horizontal,25)
-                        .padding(.top)
-                    //MARK: - New Arrival Scroll View
-                    
-                    ScrollView(.horizontal,showsIndicators: false){
-                        HStack(spacing: 15){
-                            ForEach(productViewModel.newArrivalProduct) { product in
-                                ProductCard(image: product.imageURL, productName: product.productName, price: "\(product.price)")
-                                
+                            withAnimation(.spring()){
+                                isShowCategories = true
                             }
-                        }
-                        .padding(.horizontal)
-                    }
-                    
-                    
-                    //MARK: - Collection
-                    HStack{
-                        Text("Collection")
-                            .font(.system(size: 30,design: .rounded))
-                            .fontWeight(.heavy)
-                        Spacer()
-                        Button {
-                            
                         } label: {
-                            Text("See all")
-                                .foregroundColor(.gray)
+                            GimmickButton(imageName: "text.justify")
+                        }
+                        Spacer()
+                        GimmickButton(imageName: "cart.fill")
+                    }.padding(.horizontal,25)
+                        .padding(.vertical)
+                    ScrollView(.vertical,showsIndicators: false){
+                        //MARK: - New Arrival
+                        HStack{
+                            Text("New Arrival")
+                                .font(.system(size: 30,design: .rounded))
+                                .fontWeight(.heavy)
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Text("See all")
+                                    .foregroundColor(.gray)
+                            }
+                            
+                        }.padding(.horizontal,25)
+                            .padding(.top)
+                        //MARK: - New Arrival Scroll View
+                        
+                        ScrollView(.horizontal,showsIndicators: false){
+                            HStack(spacing: 15){
+                                ForEach(productViewModel.newArrivalProduct) { product in
+                                    ProductCard(product: product)
+                                        .padding(.vertical)
+                                }
+                            }
+                            .padding(.horizontal)
                         }
                         
-                    }.padding(.horizontal,25)
-                        .padding(.top)
-                    
-                    ScrollView(.horizontal,showsIndicators: false){
-                        HStack(spacing: 25){
-                            CollectionCard(image: "winter", collectionName: "Winter")
-                            CollectionCard(image: "summer", collectionName: "Summer")
-                            CollectionCard(image: "fall", collectionName: "Fall")
-                            CollectionCard(image: "spring", collectionName: "Spring")
+                        
+                        //MARK: - Collection
+                        HStack{
+                            Text("Collection")
+                                .font(.system(size: 30,design: .rounded))
+                                .fontWeight(.heavy)
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Text("See all")
+                                    .foregroundColor(.gray)
+                            }
+                            
+                        }.padding(.horizontal,25)
+                            .padding(.top)
+                        
+                        ScrollView(.horizontal,showsIndicators: false){
+                            HStack(spacing: 25){
+                                CollectionCard(image: "winter", collectionName: "Winter")
+                                CollectionCard(image: "summer", collectionName: "Summer")
+                                CollectionCard(image: "fall", collectionName: "Fall")
+                                CollectionCard(image: "spring", collectionName: "Spring")
+                            }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
+                        Spacer()
                     }
-                    Spacer()
+                    
                 }
-                
+                //MARK: - Categories View
+                CategoriesView(categories: productViewModel.categories, isShowCategory: $isShowCategories)
+                    .offset(x:isShowCategories ? 0 : -UIScreen.main.bounds.width)
             }
-            
         }
         .onAppear(){
             productViewModel.getNewArrivalProduct()
+            productViewModel.getCategories()
+            productViewModel.getWishList()
+            isShowCategories = false
         }
         .padding(.bottom,UIScreen.main.bounds.height*0.01)
     }

@@ -30,7 +30,7 @@ struct CollectionCard: View {
                 )
             ,alignment: .bottom
             )
-            .shadow(radius: 6)
+            .shadow(radius: 5)
     }
 }
 

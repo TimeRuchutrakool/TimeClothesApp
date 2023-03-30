@@ -8,20 +8,19 @@
 import SwiftUI
 //.frame(width: 200,height:320)
 struct ProductCard: View {
-    let image: String
-    let productName: String
-    let price: String
+    let product: Product
     var body: some View {
         
             VStack{
-                    AsyncImage(url: URL(string: image)){ image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 190,height: 250)
-                            .cornerRadius(16)
-                            .padding()
-                        
+                AsyncImage(url: URL(string: product.imageURL)){ image in
+                    NavigationLink(destination: ProductDetailScreen(product: product)) {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(minWidth: 140,maxWidth: 170,minHeight: 200,maxHeight: 230)
+                                .cornerRadius(16)
+                                .padding()
+                        }
                     } placeholder: {
                         VStack {
                             Spacer()
@@ -36,10 +35,11 @@ struct ProductCard: View {
                     }
                 HStack{
                     VStack(alignment: .leading){
-                        Text(productName)
-                            .font(.system(size: 20))
-                            .fontWeight(.heavy)
-                        Text("$\(price)")
+                        Text(product.productName)
+                            .font(.system(size: 17))
+                            .fontWeight(.semibold)
+                            .lineLimit(1)
+                        Text(String(format: "$%.2f", product.price))
                             .foregroundColor(.gray)
                     }
                     Spacer()
@@ -53,19 +53,15 @@ struct ProductCard: View {
                 .padding(.horizontal)
                 
             }
-            .frame(width: 200,height: 350)
+            .frame(minWidth: 150,maxWidth: 180,minHeight: 300,maxHeight: 330)
             .background(.clear)
-            .shadow(radius: 10)
-            .padding(.vertical)
-            
-            
-        
+            .shadow(radius: 5)
     }
 }
 
 struct ProductCardView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductCard(image: "https://www.brighttv.co.th/wp-content/uploads/2022/07/jennierubyjane_263116473_231156495671731_8959309865840505753_n-822x1024.jpg",productName: "Jennie",price: "48.99").previewLayout(.sizeThatFits).background(.black)
+        ProductCard(product: Product()).previewLayout(.sizeThatFits).background(.black)
         
     }
 }

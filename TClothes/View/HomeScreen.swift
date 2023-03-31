@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @StateObject private var productViewModel = ProductsViewModel()
+    @ObservedObject private var productViewModel: ProductsViewModel
     @State private var isShowCategories = false
+    
+    init(){
+        productViewModel = ProductsViewModel()
+        productViewModel.getProductByFilter(field: "new", value: true)
+        productViewModel.getCategories()
+    }
     
     var body: some View {
         ZStack{
@@ -64,6 +70,7 @@ struct HomeScreen: View {
                             Text("Collection")
                                 .font(.system(size: 30,design: .rounded))
                                 .fontWeight(.heavy)
+                               
                             Spacer()
                             Button {
                                 
@@ -94,9 +101,8 @@ struct HomeScreen: View {
             }
         }
         .onAppear(){
-            productViewModel.getProductByFilter(field: "new", value: true)
-            productViewModel.getCategories()
             isShowCategories = false
+            
         }
         .padding(.bottom,UIScreen.main.bounds.height*0.01)
     }

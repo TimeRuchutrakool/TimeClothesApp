@@ -15,8 +15,7 @@ struct Webservice{
     let db = Firestore.firestore()
     let auth = Auth.auth()
     
-    func getProductByFilter(field: String,value: Any,completion: @escaping ([Product]) -> ()){
-        var products: [Product] = []
+    func getUser(completion: @escaping (Customer) -> ()) {
         db.collection("Customers").document(auth.currentUser?.uid ?? "").getDocument { querySnapshot, error in
             if let error = error{
                 print(error)
@@ -25,38 +24,69 @@ struct Webservice{
                 guard let snapshot = querySnapshot else{
                     return
                 }
-                if let wishListsID = snapshot["wishlist"] as? [String]{
-                    db.collection("Products").whereField(field, isEqualTo: value).getDocuments { querySnapshot, error in
-                        if let error = error{
-                            print(error)
+                if let data = snapshot.data(){
+                    let user = Customer()
+                    user.id = self.auth.currentUser?.uid ?? ""
+                    user.username = data["username"] as? String ?? ""
+                    user.email = data["email"] as? String ?? ""
+                   
+                    
+                    completion(user)
+                }
+                
+            }
+        }
+        
+    }
+    
+   
+    
+    func getProductByFilter(field: String,value: Any,completion: @escaping ([Product]) -> ()){
+        var products: [Product] = []
+        var wishlists: [String] = []
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("wishlists").getDocuments { querySnapshot, error in
+            if let error = error{
+                print(error)
+            }
+            else{
+                guard let snapshot = querySnapshot else{
+                    return
+                }
+                for document in snapshot.documents{
+                    let id = document.documentID
+                    wishlists.append(id)
+                }
+                db.collection("Products").whereField(field, isEqualTo: value).getDocuments { querySnapshot, error in
+                    if let error = error{
+                        print(error)
+                    }
+                    else{
+                        guard let snapshot = querySnapshot else{
+                            return
                         }
-                        else{
-                            guard let snapshot = querySnapshot else{
-                                return
-                            }
-                            for document in snapshot.documents{
-                                let product = Product()
-                                let id = document.documentID
-                                product.id = id
-                                product.productName = document["productname"] as? String ?? ""
-                                product.price = document["price"] as? Double ?? 0
-                                product.imageURL = document["imageURL"] as? String ?? ""
-                                product.collection = document["collection"] as? String ?? ""
-                                product.new = document["new"] as? Bool ?? false
-                                product.category = document["category"] as? String ?? ""
-                                
-                                for wishlistID in wishListsID{
-                                    if wishlistID == id{
-                                        product.isWish = true
-                                    }
+                        for document in snapshot.documents{
+                            let product = Product()
+                            let id = document.documentID
+                            product.id = id
+                            product.productName = document["productname"] as? String ?? ""
+                            product.price = document["price"] as? Double ?? 0
+                            product.imageURL = document["imageURL"] as? String ?? ""
+                            product.collection = document["collection"] as? String ?? ""
+                            product.new = document["new"] as? Bool ?? false
+                            product.category = document["category"] as? String ?? ""
+                            
+                            for wishlistID in wishlists{
+                                if wishlistID == id{
+                                    product.isWish = true
                                 }
-                                products.append(product)
-                                
                             }
-                            completion(products)
+                            products.append(product)
+                            
                         }
+                        completion(products)
                     }
                 }
+
             }
         }
         
@@ -84,4 +114,14 @@ struct Webservice{
         }
     }
     
+    func addWishLists(productID: String){
+        
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("wishlists").document(productID).setData(["isWish": true], merge: true)
+        
+    }
+    func removeWishLists(productID: String){
+        
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("wishlists").document(productID).delete()
+        
+    }
 }

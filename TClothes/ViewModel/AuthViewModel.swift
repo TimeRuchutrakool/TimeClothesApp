@@ -13,6 +13,7 @@ class AuthViewModel: ObservableObject{
     
     let db = Firestore.firestore()
     let auth = Auth.auth()
+    let webservice = Webservice()
     
     var user: User? {
         didSet{
@@ -57,6 +58,8 @@ class AuthViewModel: ObservableObject{
             print("Log In Succeeded")
         }
     }
+    
+    
     
     func logOut(){
         do{

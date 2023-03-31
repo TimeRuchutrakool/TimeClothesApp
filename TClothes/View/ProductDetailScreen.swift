@@ -136,6 +136,7 @@ struct ProductDetailScreen: View {
             }//VStack
         }//ZStack
         .navigationBarBackButtonHidden(true)
+        
     }
 }
 

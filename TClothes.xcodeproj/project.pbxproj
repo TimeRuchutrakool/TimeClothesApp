@@ -42,6 +42,7 @@
 		F44E965F29D571780060E59A /* SizeCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44E965E29D571780060E59A /* SizeCircle.swift */; };
 		F471882829D5777500EB7AF8 /* PinkImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F471882729D5777500EB7AF8 /* PinkImageButton.swift */; };
 		F471882A29D57EDA00EB7AF8 /* SharedProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F471882929D57EDA00EB7AF8 /* SharedProductScreen.swift */; };
+		F48118C129D6D4D2002F278D /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48118C029D6D4D2002F278D /* Customer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		F44E965E29D571780060E59A /* SizeCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeCircle.swift; sourceTree = "<group>"; };
 		F471882729D5777500EB7AF8 /* PinkImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinkImageButton.swift; sourceTree = "<group>"; };
 		F471882929D57EDA00EB7AF8 /* SharedProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedProductScreen.swift; sourceTree = "<group>"; };
+		F48118C029D6D4D2002F278D /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				F44E965029D4828D0060E59A /* Product.swift */,
+				F48118C029D6D4D2002F278D /* Customer.swift */,
 				F44E965A29D55B810060E59A /* Categories.swift */,
 			);
 			path = Model;
@@ -305,6 +308,7 @@
 				F44E965F29D571780060E59A /* SizeCircle.swift in Sources */,
 				F44E963229D330F70060E59A /* LogInSignUpButton.swift in Sources */,
 				F471882829D5777500EB7AF8 /* PinkImageButton.swift in Sources */,
+				F48118C129D6D4D2002F278D /* Customer.swift in Sources */,
 				F44E961329D2C0340060E59A /* TClothesApp.swift in Sources */,
 				F4136CEA29D6C76800B39AD2 /* Webservice.swift in Sources */,
 				F44E965B29D55B810060E59A /* Categories.swift in Sources */,

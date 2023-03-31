@@ -25,6 +25,7 @@ struct FirstScreen: View {
             }
         }.onAppear(){
             authModel.listenToAuthState()
+           
         }
     }
 }

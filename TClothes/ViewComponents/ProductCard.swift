@@ -6,9 +6,18 @@
 //
 
 import SwiftUI
-//.frame(width: 200,height:320)
+
 struct ProductCard: View {
     let product: Product
+    @State private var isWish: Bool = false
+    @ObservedObject private var productViewModel:ProductsViewModel
+    
+    init(product: Product){
+        self.product = product
+        productViewModel = ProductsViewModel()
+        
+    }
+    
     var body: some View {
         
             VStack{
@@ -47,9 +56,20 @@ struct ProductCard: View {
                     Circle()
                         .fill(Color("ColorPink"))
                         .frame(width: 40)
-                        .overlay(Image(systemName:product.isWish ? "heart.fill" : "heart")
+                        .overlay(Image(systemName:isWish ? "heart.fill" : "heart")
                             .font(.system(size: 20))
                             .foregroundColor(.white))
+                        .onTapGesture {
+                            isWish.toggle()
+                            product.isWish = isWish
+                            
+                            if product.isWish {
+                                productViewModel.addWishList(productID: product.id)
+                            }
+                            else{
+                                productViewModel.removeWishList(productID: product.id)
+                            }
+                        }
                 }
                 .padding(.horizontal)
                 
@@ -57,6 +77,9 @@ struct ProductCard: View {
             .frame(minWidth: 170,maxWidth: 180,minHeight: 300,maxHeight: 330)
             .background(.clear)
             .shadow(radius: 5)
+            .onAppear(){
+                isWish = product.isWish
+            }
     }
 }
 

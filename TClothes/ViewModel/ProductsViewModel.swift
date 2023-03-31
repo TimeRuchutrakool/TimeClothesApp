@@ -11,7 +11,6 @@ import FirebaseAuth
 
 class ProductsViewModel: ObservableObject{
     
-    let db = Firestore.firestore()
     let webService = Webservice()
     @Published var categories: [Categories] = []
     @Published var products: [Product] = []

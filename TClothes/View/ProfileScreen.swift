@@ -8,8 +8,27 @@
 import SwiftUI
 
 struct ProfileScreen: View {
+    @AppStorage("isBoardingActive") var isBoardingActive: Bool = false
+    @ObservedObject private var authViewModel: AuthViewModel
+    init(){
+        authViewModel = AuthViewModel()
+    }
     var body: some View {
-        Text("Profile")
+        VStack {
+            Button {
+                authViewModel.logOut()
+            } label: {
+                Text("Log Out")
+            }
+            
+            Button {
+                isBoardingActive = true
+            } label: {
+                Text("Boarding Active")
+            }
+
+        }
+        
     }
 }
 

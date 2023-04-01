@@ -11,7 +11,7 @@ struct ProductCard: View {
     let product: Product
     @State private var isWish: Bool = false
     @ObservedObject private var productViewModel:ProductsViewModel
-    
+    @State private var wishAnimating: Bool = false
     init(product: Product){
         self.product = product
         productViewModel = ProductsViewModel()
@@ -56,18 +56,29 @@ struct ProductCard: View {
                     Circle()
                         .fill(Color("ColorPink"))
                         .frame(width: 40)
-                        .overlay(Image(systemName:isWish ? "heart.fill" : "heart")
+                        .overlay(
+                            Image(systemName:isWish ? "heart.fill" : "heart")
                             .font(.system(size: 20))
-                            .foregroundColor(.white))
-                        .onTapGesture {
-                            isWish.toggle()
-                            product.isWish = isWish
-                            
-                            if product.isWish {
-                                productViewModel.addWishList(productID: product.id)
+                            .foregroundColor(.white)
+                            .scaleEffect(wishAnimating ? 2 : 1)
+                        )
+                    
+                        .onTap {
+                            withAnimation(.spring()){
+                                wishAnimating = true
                             }
-                            else{
-                                productViewModel.removeWishList(productID: product.id)
+                        } onEnded: {
+                            withAnimation(.spring()){
+                                wishAnimating = false
+                                isWish.toggle()
+                                product.isWish = isWish
+                                
+                                if product.isWish {
+                                    productViewModel.addWishList(productID: product.id)
+                                }
+                                else{
+                                    productViewModel.removeWishList(productID: product.id)
+                                }
                             }
                         }
                 }

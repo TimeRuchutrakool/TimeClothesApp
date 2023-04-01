@@ -29,7 +29,7 @@ struct CategoriesView: View {
                     .fontWeight(.heavy)
                     .padding(.vertical)
                 ForEach(categories) { category in
-                    NavigationLink(destination: SharedProductScreen(category: category.category)){
+                    NavigationLink(destination: SharedProductScreen(filter: "category", value: category.category)){
                         Text(category.category)
                             .font(.system(size: 20))
                             .foregroundColor(.black)

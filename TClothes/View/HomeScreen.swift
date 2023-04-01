@@ -43,13 +43,10 @@ struct HomeScreen: View {
                                 .font(.system(size: 30,design: .rounded))
                                 .fontWeight(.heavy)
                             Spacer()
-                            Button {
-                                
-                            } label: {
+                            NavigationLink(destination: SharedProductScreen(filter: "new", value: true)) {
                                 Text("See all")
                                     .foregroundColor(.gray)
                             }
-                            
                         }.padding(.horizontal,25)
                             .padding(.top)
                         //MARK: - New Arrival Scroll View
@@ -84,10 +81,11 @@ struct HomeScreen: View {
                         
                         ScrollView(.horizontal,showsIndicators: false){
                             HStack(spacing: 25){
-                                CollectionCard(image: "winter", collectionName: "Winter")
-                                CollectionCard(image: "summer", collectionName: "Summer")
-                                CollectionCard(image: "fall", collectionName: "Fall")
-                                CollectionCard(image: "spring", collectionName: "Spring")
+                                ForEach(Constant.collections,id: \.self) { collection in
+                                    NavigationLink(destination: SharedProductScreen(filter: "collection", value: collection)) {
+                                        CollectionCard(image: collection, collectionName: collection)
+                                    }
+                                }
                             }
                             .padding(.horizontal)
                         }

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SharedProductScreen: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let category: String
+    let filter: String
+    let value: Any
     @ObservedObject private var productViewModel = ProductsViewModel()
     let columns: [GridItem] = [GridItem(.flexible()),GridItem(.flexible())]
     
@@ -26,7 +27,7 @@ struct SharedProductScreen: View {
                         GimmickButton(imageName: "arrow.left")
                     }
                     Spacer()
-                    Text(category)
+                    Text(value is Bool ? "New Arrival" : value as? String ?? filter)
                         .font(.headline)
                         .bold()
                     Spacer()
@@ -53,7 +54,7 @@ struct SharedProductScreen: View {
             }
         }
         .onAppear(){
-            productViewModel.getProductByFilter(field: "category",value: category)
+            productViewModel.getProductByFilter(field: filter,value: value)
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -61,6 +62,6 @@ struct SharedProductScreen: View {
 
 struct SharedProductScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SharedProductScreen(category: "Shirt")
+        SharedProductScreen(filter: "category", value: "Shirt")
     }
 }

@@ -15,7 +15,7 @@ struct SearchScreen: View {
     init(){
         productViewModel = ProductsViewModel()
         productViewModel.getProductByFilter(field: "productname", value: searchText)
-        
+        productViewModel.getCartItems()
     }
     var body: some View {
         
@@ -38,7 +38,23 @@ struct SearchScreen: View {
                             .onSubmit {
                                 productViewModel.getProductByFilter(field: "productname", value: searchText)
                             }
-                        GimmickButton(imageName: "cart.fill")
+                        Button {
+                            
+                        } label: {
+                            GimmickButton(imageName: "cart.fill")
+                                .overlay(
+                                    Circle()
+                                        .fill(Color.accentColor)
+                                        .frame(width: 20)
+                                        .overlay(
+                                            Text(String(describing: productViewModel.cartItems.count))
+                                                .foregroundColor(.white)
+                                        )
+                                    ,alignment: .topTrailing
+                                )
+                        }
+                        
+                        
                         Spacer()
                     }
                     

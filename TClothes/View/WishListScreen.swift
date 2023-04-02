@@ -10,6 +10,12 @@ import SwiftUI
 struct WishListScreen: View {
     
     let columns: [GridItem] = [GridItem(.flexible()),GridItem(.flexible())]
+    @ObservedObject private var productViewModel: ProductsViewModel
+    
+    init(){
+        productViewModel = ProductsViewModel()
+        productViewModel.getWishLists()
+    }
     
     var body: some View {
         NavigationView {
@@ -17,6 +23,20 @@ struct WishListScreen: View {
                 Color("ColorSoftGray")
                     .edgesIgnoringSafeArea(.all)
                 
+                ScrollView(.vertical,showsIndicators: false){
+                    LazyVGrid(columns: columns) {
+                        ForEach(productViewModel.wishlists) { product in
+                            NavigationLink(destination: ProductDetailScreen(product: product)) {
+                                ProductCard(product: product)
+                                
+                            }
+                        }
+                    }
+                    
+                }
+                .refreshable {
+                    productViewModel.getWishLists()
+                }
             }
             .navigationTitle("Wishlists")
         }

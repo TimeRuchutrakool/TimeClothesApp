@@ -15,11 +15,8 @@ class ProductsViewModel: ObservableObject{
     @Published var categories: [Categories] = []
     @Published var products: [Product] = []
     @Published var user: Customer = Customer()
-    
-    init(){
-        getuser()
-        
-    }
+    @Published var wishlists: [Product] = []
+    @Published var cartItems: [CartItem] = []
     
     func getuser(){
         webService.getUser { user in
@@ -55,5 +52,17 @@ class ProductsViewModel: ObservableObject{
         
             self.webService.removeWishLists(productID: productID)
         
+    }
+    
+    func getWishLists(){
+        webService.getWishListsItems { products in
+            self.wishlists = products
+        }
+    }
+    
+    func getCartItems(){
+        webService.getCartItems { cartItems in
+            self.cartItems = cartItems
+        }
     }
 }

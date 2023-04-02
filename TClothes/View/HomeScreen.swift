@@ -15,6 +15,7 @@ struct HomeScreen: View {
         productViewModel = ProductsViewModel()
         productViewModel.getProductByFilter(field: "new", value: true)
         productViewModel.getCategories()
+        productViewModel.getCartItems()
     }
     
     var body: some View {
@@ -33,7 +34,22 @@ struct HomeScreen: View {
                             GimmickButton(imageName: "text.justify")
                         }
                         Spacer()
-                        GimmickButton(imageName: "cart.fill")
+                        Button {
+                            
+                        } label: {
+                            GimmickButton(imageName: "cart.fill")
+                                .overlay(
+                                    Circle()
+                                        .fill(Color.accentColor)
+                                        .frame(width: 20)
+                                        .overlay(
+                                            Text(String(describing: productViewModel.cartItems.count))
+                                                .foregroundColor(.white)
+                                        )
+                                    ,alignment: .topTrailing
+                                )
+                        }
+
                     }.padding(.horizontal,25)
                         .padding(.vertical)
                     ScrollView(.vertical,showsIndicators: false){
@@ -69,12 +85,7 @@ struct HomeScreen: View {
                                 .fontWeight(.heavy)
                                
                             Spacer()
-                            Button {
-                                
-                            } label: {
-                                Text("See all")
-                                    .foregroundColor(.gray)
-                            }
+                           
                             
                         }.padding(.horizontal,25)
                             .padding(.top)

@@ -51,6 +51,9 @@ struct SharedProductScreen: View {
                         }
                     }
                 }
+                .refreshable {
+                    productViewModel.getProductByFilter(field: filter,value: value)
+                }
             }
         }
         .onAppear(){

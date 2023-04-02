@@ -38,7 +38,7 @@ class AuthViewModel: ObservableObject{
             self.db.collection("Customers").document(self.auth.currentUser?.uid ?? UUID().uuidString).setData([
                 "username" : username,
                 "email": email,
-                "wishlist": []
+                
             ]) { err in
                 if let err = err {
                     print("Error writing document: \(err)")

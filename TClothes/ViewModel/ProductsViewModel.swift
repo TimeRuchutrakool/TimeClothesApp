@@ -30,23 +30,30 @@ class ProductsViewModel: ObservableObject{
     
     func getProductByFilter(field: String,value: Any){
         
-        webService.getProductByFilter(field: field, value: value) { products in
-            self.products = products
-            
-        }
+            webService.getProductByFilter(field: field, value: value) { products in
+                self.products = products
+                
+            }
+        
     }
     
     func getCategories(){
-        webService.getCategories { categories in
-            self.categories = categories
-        }
+        
+            self.webService.getCategories { categories in
+                self.categories = categories
+            }
+        
     }
 
     func addWishList(productID: String){
-        webService.addWishLists(productID: productID)
+        
+            self.webService.addWishLists(productID: productID)
+        
     }
 
     func removeWishList(productID: String){
-        webService.removeWishLists(productID: productID)
+        
+            self.webService.removeWishLists(productID: productID)
+        
     }
 }

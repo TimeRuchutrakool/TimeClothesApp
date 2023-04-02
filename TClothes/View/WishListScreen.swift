@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct WishListScreen: View {
+    
+    let columns: [GridItem] = [GridItem(.flexible()),GridItem(.flexible())]
+    
     var body: some View {
-        Text("WishList")
+        NavigationView {
+            ZStack{
+                Color("ColorSoftGray")
+                    .edgesIgnoringSafeArea(.all)
+                
+            }
+            .navigationTitle("Wishlists")
+        }
     }
 }
 

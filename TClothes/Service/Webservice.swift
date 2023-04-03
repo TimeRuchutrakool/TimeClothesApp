@@ -326,46 +326,50 @@ struct Webservice{
     }
     
     //MARK: - Get Order
-    func getOrders() async -> [Order] {
+    func getOrders(completion: @escaping ([Order]) -> ()) {
         var orders: [Order] = []
-        do {
-            let querySnapshot = try await db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("orders").getDocuments()
-            guard let snapshot = <#querySnapshot#> else{
-                <#return#>
+        
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("orders").getDocuments(){ querySnapshot,error in
+            if let error = error{
+                print(error)
+            }
+            else{
+            guard let snapshot = querySnapshot else{
+                return
             }
             let order: Order = Order()
-            for document in snapshot.documents{
-                let orderID = document.documentID
-                let date = document["date"] as? Date ?? Date()
-                var orderItems: [Item] = []
-                let items = document["items"] as? [String:[String:Any]]
-                guard let items1 = items else { <#return#> }
-                for id in items1.keys{
-                    let item = Item()
-                    let productID = items1[id]?["productID"] as? String ?? ""
-                    let productName = items1[id]?["productname"] as? String ?? ""
-                    let size = items1[id]?["size"] as? String ?? ""
-                    let quantity = items1[id]?["quantity"] as? Int ?? 0
-                    let imageURL = items1[id]?["imageURL"] as? String ?? ""
-                    let price = items1[id]?["price"] as? Double ?? 0.0
-                    item.productID = productID
-                    item.productName = productName
-                    item.quantity = quantity
-                    item.size = size
-                    item.imageURL = imageURL
-                    item.price = price
-                    orderItems.append(item)
+                for document in snapshot.documents{
+                    let orderID = document.documentID
+                    let date = document["date"] as? Date ?? Date()
+                    var orderItems: [Item] = []
+                    let items = document["items"] as? [String:[String:Any]]
+                    guard let items = items else{
+                        return
+                    }
+                    for id in items.keys{
+                        let item = Item()
+                        let productID = items[id]?["productID"] as? String ?? ""
+                        let productName = items[id]?["productname"] as? String ?? ""
+                        let size = items[id]?["size"] as? String ?? ""
+                        let quantity = items[id]?["quantity"] as? Int ?? 0
+                        let imageURL = items[id]?["imageURL"] as? String ?? ""
+                        let price = items[id]?["price"] as? Double ?? 0.0
+                        item.productID = productID
+                        item.productName = productName
+                        item.quantity = quantity
+                        item.size = size
+                        item.imageURL = imageURL
+                        item.price = price
+                        orderItems.append(item)
+                    }
+                    order.orderID = orderID
+                    print(order.orderID)
+                    order.date = date
+                    order.items = orderItems
+                    orders.append(order)
                 }
-                order.orderID = orderID
-                print(order.orderID)
-                order.date = date
-                order.items = orderItems
-                orders.append(order)
-                
             }
-            return orders
-        } catch let error {
-            print(error)
         }
+        
     }
 }

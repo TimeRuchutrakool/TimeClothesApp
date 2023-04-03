@@ -184,7 +184,7 @@ struct Webservice{
     //MARK: - GET CART ITEMS
     func getCartItems(completion: @escaping ([CartItem]) -> ()){
         var cartItems: [CartItem] = []
-        var cartItemsID: [String:(String,Int)] = [:]
+        var cartItemsID: [String:(String,String,Int)] = [:]
         db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").getDocuments { querySnapshot, error in
             if let error = error{
                 print(error.localizedDescription)
@@ -196,7 +196,7 @@ struct Webservice{
                 let documents = snapShot.documents
                 for document in documents{
                     let id = document.documentID
-                    cartItemsID[id] = (document["size"] as? String ?? "",document["quantity"] as? Int ?? 0)
+                    cartItemsID[id] = (document["productID"] as? String ?? "",document["size"] as? String ?? "",document["quantity"] as? Int ?? 0)
                 }
                 db.collection("Products").getDocuments { querySnapshot, error in
                     if let error = error{
@@ -209,16 +209,17 @@ struct Webservice{
                         for document in snapshot.documents{
                             let id = document.documentID
                             for (key,value) in cartItemsID{
-                                if key == id{
+                                if value.0 == id{
                                     let product = Product()
                                     
-                                    let size = value.0
-                                    let quantity = value.1
+                                    let size = value.1
+                                    let quantity = value.2
                                     product.id = id
                                     product.productName = document["productname"] as? String ?? ""
                                     product.price = document["price"] as? Double ?? 0
                                     product.imageURL = document["imageURL"] as? String ?? ""
                                     let cartItem = CartItem()
+                                    cartItem.cartItemID = key
                                     cartItem.product = product
                                     cartItem.size = size
                                     cartItem.quantity = quantity
@@ -226,7 +227,7 @@ struct Webservice{
                                 }
                             }
                             
-                           
+                            
                         }
                         completion(cartItems)
                     }
@@ -236,6 +237,135 @@ struct Webservice{
     }
     
     //MARK: - ADD CART ITEM
+    func addItemToCart(productID: String,size: String){
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").getDocuments { querySnapshot, error in
+            if let error = error{
+                print(error)
+            }
+            else{
+                guard let snapshot = querySnapshot else {
+                    return
+                }
+                if snapshot.documents.isEmpty{
+                    db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document(productID+size).setData([
+                        "productID" : productID,
+                        "quantity" : 1,
+                        "size" : size
+                    ])
+                }
+                else{
+                    for document in snapshot.documents{
+                        if document.documentID == (productID+size){
+                            var quantity = document["quantity"] as? Double ?? 0
+                            quantity += 1
+                            db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document(productID+size).setData([
+                                "quantity": quantity
+                            ],merge: true)
+                        }
+                        else{
+                            db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document(productID+size).setData([
+                                "productID" : productID,
+                                "quantity" : 1,
+                                "size" : size
+                            ])
+                        }
+                    }
+                }
+            }
+        }
+    }
     //MARK: - REMOVE CART ITEM
+    func removeItemToCart(productID: String,size: String){
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").getDocuments { querySnapshot, error in
+            if let error = error{
+                print(error)
+            }
+            else{
+                guard let snapshot = querySnapshot else {
+                    return
+                }
+                for document in snapshot.documents{
+                    if document.documentID == (productID+size){
+                        var quantity = document["quantity"] as? Double ?? 0
+                        quantity -= 1
+                        if quantity > 0{
+                            
+                            db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document(productID+size).setData([
+                                "quantity": quantity
+                            ],merge: true)
+                        }
+                        else{
+                            db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document(productID+size).delete()
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
     
+    //MARK: - Add Orders
+    func addOrder(cartItems: [CartItem]){
+        var items: [String:[String:Any]] = [:]
+        for item in cartItems{
+            items[item.cartItemID] = [
+                "productID" : item.product.id,
+                "productname" : item.product.productName,
+                "price" : item.product.price,
+                "quantity" : item.quantity,
+                "size" : item.size,
+                "imageURL" : item.product.imageURL
+            ]
+        }
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("orders").document().setData([
+            "date" : Date(),
+            "items" : items
+        ])
+        
+        
+    }
+    
+    //MARK: - Get Order
+    func getOrders() async -> [Order] {
+        var orders: [Order] = []
+        do {
+            let querySnapshot = try await db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("orders").getDocuments()
+            guard let snapshot = <#querySnapshot#> else{
+                <#return#>
+            }
+            let order: Order = Order()
+            for document in snapshot.documents{
+                let orderID = document.documentID
+                let date = document["date"] as? Date ?? Date()
+                var orderItems: [Item] = []
+                let items = document["items"] as? [String:[String:Any]]
+                guard let items1 = items else { <#return#> }
+                for id in items1.keys{
+                    let item = Item()
+                    let productID = items1[id]?["productID"] as? String ?? ""
+                    let productName = items1[id]?["productname"] as? String ?? ""
+                    let size = items1[id]?["size"] as? String ?? ""
+                    let quantity = items1[id]?["quantity"] as? Int ?? 0
+                    let imageURL = items1[id]?["imageURL"] as? String ?? ""
+                    let price = items1[id]?["price"] as? Double ?? 0.0
+                    item.productID = productID
+                    item.productName = productName
+                    item.quantity = quantity
+                    item.size = size
+                    item.imageURL = imageURL
+                    item.price = price
+                    orderItems.append(item)
+                }
+                order.orderID = orderID
+                print(order.orderID)
+                order.date = date
+                order.items = orderItems
+                orders.append(order)
+                
+            }
+            return orders
+        } catch let error {
+            print(error)
+        }
+    }
 }

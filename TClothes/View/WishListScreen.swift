@@ -14,7 +14,7 @@ struct WishListScreen: View {
     
     init(){
         productViewModel = ProductsViewModel()
-        productViewModel.getWishLists()
+        
     }
     
     var body: some View {
@@ -39,6 +39,9 @@ struct WishListScreen: View {
                 }
             }
             .navigationTitle("Wishlists")
+            .onAppear(){
+                productViewModel.getWishLists()
+            }
         }
     }
 }

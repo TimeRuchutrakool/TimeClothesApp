@@ -9,7 +9,14 @@ import SwiftUI
 
 struct CartScreen: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    private var array = ["Apple","Microsoft","Apple","Microsoft","Apple","Microsoft"]
+    @ObservedObject private var productViewModel: ProductsViewModel
+    @State private var quantity: Int = 0
+  
+    init(){
+        productViewModel = ProductsViewModel()
+        productViewModel.getCartItems()
+    
+    }
     var body: some View {
         ZStack{
             Color("ColorSoftGray")
@@ -34,114 +41,118 @@ struct CartScreen: View {
                     
                     ScrollView(showsIndicators: false) {
                         
-                        ForEach(array,id: \.self) { item in
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.white)
-                                .frame(width: geo.size.width*0.8,height: geo.size.height*0.2)
-                                .overlay(
-                                    HStack{
-                                        Image("Summer")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .cornerRadius(16)
-                                            .frame(width: geo.size.width*0.35)
-                                            .padding(.vertical)
-                                        VStack{
-                                            HStack{
-                                                Text(item)
-                                                    .font(.system(.title3))
-                                                    .bold()
-                                                Spacer()
-                                            }.padding(.vertical)
-                                            Spacer()
-                                            HStack {
-                                                Text("$49.99")
-                                                    .font(.system(.title2))
-                                                    .fontWeight(.semibold)
-                                                Spacer()
-                                            }
-                                            Spacer()
-                                            HStack {
-                                                
-                                                Text("L")
-                                                    .font(.system(.title3))
-                                                    .fontWeight(.heavy)
-                                                Spacer()
-                                                
-                                                Circle()
-                                                    .stroke(lineWidth: 2)
-                                                    .overlay(Image(systemName: "minus"))
-                                                    .foregroundColor(Color.accentColor)
-                                                RoundedRectangle(cornerRadius: 5)
-                                                    .stroke(lineWidth: 0.5)
-                                                    .frame(width: 30)
-                                                    .overlay(Text("2").foregroundColor(Color.gray))
-                                                Circle()
-                                                    .stroke(lineWidth: 2)
-                                                    .overlay(Image(systemName: "plus"))
-                                                    .foregroundColor(Color.accentColor)
-                                                
-                                            }
-                                            .padding(.vertical)
-                                            .padding(.trailing)
-                                        }
-                                        Spacer()
-                                    }
-                                )
+                        ForEach(productViewModel.cartItems,id: \.id) { item in
+                            
+                            CartItemView(geo:geo,item:item).environmentObject(productViewModel)
                         }
                         
                     }
-                    HStack {
-                        Text("Total")
-                            .font(.system(.title,design: .rounded))
-                            .fontWeight(.heavy)
-                        Spacer()
-                    }.padding(.leading)
-                    
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.white)
-                        .frame(width: geo.size.width*0.8,height: geo.size.height*0.2)
-                    
-                        .overlay(
-                            VStack{
-                                HStack{
-                                    Text("Products")
-                                    Spacer()
-                                    Text("$146.97")
-                                }
-                                .padding(.horizontal).padding(.top)
-                                HStack{
-                                    Text("Discounts")
-                                    Spacer()
-                                    Text("-$10.00")
-                                }
-                                .padding(.horizontal)
-                                HStack{
-                                    Text("Total")
-                                    Spacer()
-                                    Text("136.97")
-                                }
-                                .padding(.horizontal)
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color.accentColor)
-                                    .overlay(Text("Pay").foregroundColor(.white))
-                                    .padding(.horizontal)
-                                    .padding(.bottom)
-                                    
-                            }
-                        )
-                    
-                    
-                    
+                    NavigationLink(destination: CheckOutScreen()) {
+                        PinkImageButton(image: "heart", text: "Check Out")
+                            .scaleEffect(0.8)
+                          
+                    }
                 }
                 
             }
         }
+        .navigationBarHidden(true)
+        
     }
 }
 
 struct CartScreen_Previews: PreviewProvider {
     static var previews: some View {
         CartScreen()
+    }
+}
+
+struct CartItemView: View {
+    var geo: GeometryProxy
+    var item: CartItem
+    
+    @EnvironmentObject private var productViewModel: ProductsViewModel
+    @State private var quantity: Int = 0
+    
+    var body: some View {
+        
+        RoundedRectangle(cornerRadius: 16)
+            .fill(Color.white)
+            .frame(width: geo.size.width*0.8,height: geo.size.height*0.2)
+            .overlay(
+                HStack{
+                    AsyncImage(url: URL(string: item.product.imageURL)){ image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(16)
+                            .frame(width: geo.size.width*0.35)
+                            .padding(.vertical)
+                        
+                    } placeholder: {
+                        VStack {
+                            Spacer()
+                            Image("loadingIcon")
+                                .resizable()
+                                .cornerRadius(15)
+                                .frame(width: 100,height: 100)
+                                .padding()
+                            Spacer()
+                        }
+                    }
+                    
+                    VStack{
+                        HStack{
+                            Text(item.product.productName)
+                                .font(.system(.title3))
+                                .bold()
+                            Spacer()
+                        }.padding(.vertical)
+                        
+                        HStack {
+                            Text(String(format: "$%.2f", item.product.price))
+                                .font(.system(.title2))
+                                .fontWeight(.semibold)
+                            Spacer()
+                        }
+                        Spacer()
+                        HStack {
+                            
+                            Text(item.size)
+                                .font(.system(.title3))
+                                .fontWeight(.heavy)
+                            Spacer()
+                            Button {
+                                quantity -= 1
+                                if quantity <= 0{
+                                    quantity = 0
+                                }
+                                productViewModel.removeProductToCart(productID: item.product.id, size: item.size)
+                                
+                                
+                            } label: {
+                                Image(systemName: "minus")
+                                    .foregroundColor(Color.accentColor)
+                            }
+                            Text("\(quantity)").foregroundColor(Color.gray)
+                            Button {
+                                quantity += 1
+                                productViewModel.addProductToCart(productID: item.product.id, size: item.size)
+                            } label: {
+                                Image(systemName: "plus")
+                                    .foregroundColor(Color.accentColor)
+                            }
+               
+                        }
+                        .padding(.vertical)
+                        .padding(.trailing)
+                    }
+                    Spacer()
+                }
+            )
+            .onAppear(){
+                quantity = item.quantity
+                
+            }
     }
 }

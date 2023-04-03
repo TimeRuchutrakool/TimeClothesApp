@@ -14,6 +14,7 @@ class AuthViewModel: ObservableObject{
     let db = Firestore.firestore()
     let auth = Auth.auth()
     let webservice = Webservice()
+    @Published var customer: Customer = Customer()
     
     var user: User? {
         didSet{
@@ -27,6 +28,12 @@ class AuthViewModel: ObservableObject{
                 return
             }
             self.user = user
+        }
+    }
+    
+    func getuser(){
+        webservice.getUser { user in
+            self.customer = user
         }
     }
     

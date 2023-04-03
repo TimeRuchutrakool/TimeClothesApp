@@ -34,9 +34,7 @@ struct HomeScreen: View {
                             GimmickButton(imageName: "text.justify")
                         }
                         Spacer()
-                        Button {
-                            
-                        } label: {
+                        NavigationLink(destination: CartScreen()) {
                             GimmickButton(imageName: "cart.fill")
                                 .overlay(
                                     Circle()
@@ -111,6 +109,7 @@ struct HomeScreen: View {
         }
         .onAppear(){
             isShowCategories = false
+            productViewModel.getProductByFilter(field: "new", value: true)
             
         }
         .padding(.bottom,UIScreen.main.bounds.height*0.01)

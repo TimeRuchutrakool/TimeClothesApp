@@ -14,8 +14,7 @@ struct SearchScreen: View {
     let columns: [GridItem] = [GridItem(.flexible()),GridItem(.flexible())]
     init(){
         productViewModel = ProductsViewModel()
-        productViewModel.getProductByFilter(field: "productname", value: searchText)
-        productViewModel.getCartItems()
+        
     }
     var body: some View {
         
@@ -96,7 +95,10 @@ struct SearchScreen: View {
             }
             
         }
-        
+        .onAppear(){
+            productViewModel.getProductByFilter(field: "productname", value: searchText)
+            productViewModel.getCartItems()
+        }
     }
 }
 

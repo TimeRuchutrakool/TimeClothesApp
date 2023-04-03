@@ -29,8 +29,10 @@ enum Size{
 
 struct ProductDetailScreen: View {
     @Environment(\.presentationMode) var presentaionMode: Binding<PresentationMode>
+    @ObservedObject private var productViewModel: ProductsViewModel = ProductsViewModel()
     @State private var selectedSize: Size = .M
     let product: Product
+   
     var body: some View {
         ZStack{
             Color("ColorSoftGray")
@@ -44,11 +46,6 @@ struct ProductDetailScreen: View {
                         GimmickButton(imageName: "arrow.left")
                     }
                     Spacer()
-                    Button {
-                        
-                    } label: {
-                        GimmickButton(imageName: "cart.fill")
-                    }
                     
                 }//HStack
                 .padding(.horizontal,25)
@@ -128,8 +125,12 @@ struct ProductDetailScreen: View {
                     }
                     
                     Spacer()
-                    PinkImageButton(image: "basket.fill", text: "Add to cart")
+                    Button {
+                        productViewModel.addProductToCart(productID: product.id, size: selectedSize.sizeString)
+                    } label: {
+                        PinkImageButton(image: "basket.fill", text: "Add to cart")
                         
+                    }                     
                 }
                 .padding(.horizontal,40)
                 Spacer()
@@ -141,7 +142,7 @@ struct ProductDetailScreen: View {
 }
 
 struct ProductDetailScreen_Previews: PreviewProvider {
-    
+
     static var previews: some View {
         let product = Product()
         product.productName = "Blue Shirt"
@@ -150,7 +151,7 @@ struct ProductDetailScreen_Previews: PreviewProvider {
         product.price = 15.98
         product.new = true
         product.collection = "Summer"
-        
+
         return ProductDetailScreen (product: product)
     }
 }

@@ -96,9 +96,6 @@ class ProductsViewModel: ObservableObject{
         DispatchQueue.main.async {
             self.webService.getOrders { orders in
                 self.orders = orders
-                for i in orders{
-                    print(i.orderID)
-                }
             }
         }
     }

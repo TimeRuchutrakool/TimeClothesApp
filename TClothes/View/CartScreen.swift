@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct CartScreen: View {
+    @Binding var rootIsActive : Bool
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject private var productViewModel: ProductsViewModel
+    @ObservedObject private var productViewModel: ProductsViewModel = ProductsViewModel()
     @State private var quantity: Int = 0
-  
-    init(){
-        productViewModel = ProductsViewModel()
-        productViewModel.getCartItems()
-    
-    }
+//    init(){
+//        productViewModel
+//        productViewModel.getCartItems()
+//
+//    }
     var body: some View {
         ZStack{
             Color("ColorSoftGray")
@@ -47,23 +47,25 @@ struct CartScreen: View {
                         }
                         
                     }
-                    NavigationLink(destination: CheckOutScreen()) {
+                    NavigationLink(destination: CheckOutScreen(shouldPopToRootView: $rootIsActive)) {
                         PinkImageButton(image: "heart", text: "Check Out")
                             .scaleEffect(0.8)
                           
-                    }
+                    }.isDetailLink(false)
                 }
                 
             }
         }
         .navigationBarHidden(true)
-        
+        .onAppear(){
+            productViewModel.getCartItems()
+        }
     }
 }
 
 struct CartScreen_Previews: PreviewProvider {
     static var previews: some View {
-        CartScreen()
+        CartScreen(rootIsActive: .constant(false))
     }
 }
 

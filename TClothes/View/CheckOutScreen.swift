@@ -10,7 +10,7 @@ import SwiftUI
 struct CheckOutScreen: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @StateObject private var productViewModel: ProductsViewModel = ProductsViewModel()
-   
+    @Binding var shouldPopToRootView : Bool
     
     var body: some View {
         ZStack {
@@ -61,7 +61,7 @@ struct CheckOutScreen: View {
                                 }
                                 .padding(.horizontal)
                                 Button {
-                                    
+                                    self.shouldPopToRootView = false
                                     productViewModel.addOrder(cartItems: productViewModel.cartItems)
                                 } label: {
                                     RoundedRectangle(cornerRadius: 16)

@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeScreen: View {
     @ObservedObject private var productViewModel: ProductsViewModel
     @State private var isShowCategories = false
+    @State var isActive : Bool = false
     
     init(){
         productViewModel = ProductsViewModel()
@@ -34,19 +35,22 @@ struct HomeScreen: View {
                             GimmickButton(imageName: "text.justify")
                         }
                         Spacer()
-                        NavigationLink(destination: CartScreen()) {
-                            GimmickButton(imageName: "cart.fill")
-                                .overlay(
-                                    Circle()
-                                        .fill(Color.accentColor)
-                                        .frame(width: 20)
-                                        .overlay(
-                                            Text(String(describing: productViewModel.cartItems.count))
-                                                .foregroundColor(.white)
-                                        )
-                                    ,alignment: .topTrailing
-                                )
-                        }
+                        
+                            
+                            NavigationLink(destination: CartScreen(rootIsActive: $isActive),isActive: $isActive) {
+                                GimmickButton(imageName: "cart.fill")
+                                    .overlay(
+                                        Circle()
+                                            .fill(Color.accentColor)
+                                            .frame(width: 20)
+                                            .overlay(
+                                                Text(String(describing: productViewModel.cartItems.count))
+                                                    .foregroundColor(.white)
+                                            )
+                                        ,alignment: .topTrailing
+                                    )
+                            }.isDetailLink(false)
+                        
 
                     }.padding(.horizontal,25)
                         .padding(.vertical)
@@ -107,12 +111,14 @@ struct HomeScreen: View {
                     .offset(x:isShowCategories ? 0 : -UIScreen.main.bounds.width)
             }
         }
+        
         .onAppear(){
             isShowCategories = false
             productViewModel.getProductByFilter(field: "new", value: true)
             
         }
         .padding(.bottom,UIScreen.main.bounds.height*0.01)
+        
     }
 }
 

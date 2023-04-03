@@ -321,7 +321,7 @@ struct Webservice{
             "date" : Date(),
             "items" : items
         ])
-        
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document().delete()
         
     }
     
@@ -334,11 +334,12 @@ struct Webservice{
                 print(error)
             }
             else{
-            guard let snapshot = querySnapshot else{
-                return
-            }
-            let order: Order = Order()
+                guard let snapshot = querySnapshot else{
+                    return
+                }
+                
                 for document in snapshot.documents{
+                    let order: Order = Order()
                     let orderID = document.documentID
                     let date = document["date"] as? Date ?? Date()
                     var orderItems: [Item] = []
@@ -363,11 +364,11 @@ struct Webservice{
                         orderItems.append(item)
                     }
                     order.orderID = orderID
-                    print(order.orderID)
                     order.date = date
                     order.items = orderItems
                     orders.append(order)
                 }
+                completion(orders)
             }
         }
         

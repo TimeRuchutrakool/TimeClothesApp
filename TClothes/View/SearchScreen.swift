@@ -12,9 +12,10 @@ struct SearchScreen: View {
     
     @ObservedObject private var productViewModel: ProductsViewModel
     let columns: [GridItem] = [GridItem(.flexible()),GridItem(.flexible())]
+    @State var isActive : Bool = false
     init(){
         productViewModel = ProductsViewModel()
-        
+        productViewModel.getCartItems()
     }
     var body: some View {
         
@@ -37,21 +38,19 @@ struct SearchScreen: View {
                             .onSubmit {
                                 productViewModel.getProductByFilter(field: "productname", value: searchText)
                             }
-                        Button {
-                            
-                        } label: {
+                        NavigationLink(destination: CartScreen(rootIsActive: $isActive),isActive: $isActive) {
                             GimmickButton(imageName: "cart.fill")
                                 .overlay(
-                                    Circle()
-                                        .fill(Color.accentColor)
-                                        .frame(width: 20)
-                                        .overlay(
-                                            Text(String(describing: productViewModel.cartItems.count))
-                                                .foregroundColor(.white)
-                                        )
+                                        Circle()
+                                            .fill(Color.accentColor)
+                                            .frame(width: 20)
+                                            .overlay(
+                                                Text(String(describing: productViewModel.cartItems.count))
+                                                    .foregroundColor(.white)
+                                            )   
                                     ,alignment: .topTrailing
                                 )
-                        }
+                        }.isDetailLink(false)
                         
                         
                         Spacer()

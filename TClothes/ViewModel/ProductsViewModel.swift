@@ -90,8 +90,11 @@ class ProductsViewModel: ObservableObject{
     func addOrder(cartItems: [CartItem]){
         DispatchQueue.main.async {
             self.webService.addOrder(cartItems: cartItems)
+            self.cartItems = []
+            self.webService.removecartItemAfterAddOrder()
         }
     }
+    
     func getOrders(){
         DispatchQueue.main.async {
             self.webService.getOrders { orders in

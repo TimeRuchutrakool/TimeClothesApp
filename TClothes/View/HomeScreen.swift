@@ -115,7 +115,7 @@ struct HomeScreen: View {
         .onAppear(){
             isShowCategories = false
             productViewModel.getProductByFilter(field: "new", value: true)
-            
+            productViewModel.getCartItems()
         }
         .padding(.bottom,UIScreen.main.bounds.height*0.01)
         

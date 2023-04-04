@@ -321,7 +321,30 @@ struct Webservice{
             "date" : Date(),
             "items" : items
         ])
-        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document().delete()
+        
+    }
+    func removecartItemAfterAddOrder(){
+        db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").getDocuments{ queryShapshot, error in
+            if let error = error{
+                print(error)
+            }
+            else{
+                guard let snapshot = queryShapshot else{
+                    return
+                }
+                var docID: [String] = []
+                for document in snapshot.documents{
+                    docID.append(document.documentID)
+                }
+                for docID in docID{
+                    db.collection("Customers").document(auth.currentUser?.uid ?? "").collection("cartItems").document(docID).delete(){ error in
+                        if let error = error{
+                            print(error)
+                        }
+                    }
+                }
+            }
+        }
         
     }
     

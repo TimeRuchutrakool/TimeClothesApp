@@ -48,10 +48,13 @@ struct CartScreen: View {
                         
                     }
                     NavigationLink(destination: CheckOutScreen(shouldPopToRootView: $rootIsActive)) {
-                        PinkImageButton(image: "heart", text: "Check Out")
+                        PinkImageButton(image: "cart.fill", text: "Check Out")
                             .scaleEffect(0.8)
                           
                     }.isDetailLink(false)
+                        .opacity(productViewModel.cartItems.isEmpty ? 0.7 : 1)
+                        .disabled(productViewModel.cartItems.isEmpty ? true : false)
+                    
                 }
                 
             }

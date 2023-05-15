@@ -8,5 +8,5 @@
 import Foundation
 
 struct Constant{
-    static let collections: [String] = ["Summer","Winter","Fall","Spring"]
+    static let collections: [String] = ["summer","winter","fall","spring"]
 }

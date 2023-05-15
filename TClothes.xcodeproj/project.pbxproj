@@ -55,7 +55,6 @@
 
 /* Begin PBXFileReference section */
 		F4136CE929D6C76800B39AD2 /* Webservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webservice.swift; sourceTree = "<group>"; };
-		F436AA4B29D74A110089B2B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F44E960F29D2C0340060E59A /* TClothes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TClothes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F44E961229D2C0340060E59A /* TClothesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TClothesApp.swift; sourceTree = "<group>"; };
 		F44E961429D2C0340060E59A /* OnBoardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScreen.swift; sourceTree = "<group>"; };
@@ -140,7 +139,6 @@
 		F44E961129D2C0340060E59A /* TClothes */ = {
 			isa = PBXGroup;
 			children = (
-				F436AA4B29D74A110089B2B4 /* Info.plist */,
 				F44E961229D2C0340060E59A /* TClothesApp.swift */,
 				F465944829D7F528002C9A90 /* Constant */,
 				F44E964F29D482780060E59A /* Model */,
@@ -497,7 +495,6 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = LIGHT;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -532,7 +529,6 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = LIGHT;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
